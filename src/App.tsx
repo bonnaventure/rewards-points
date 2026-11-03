@@ -148,7 +148,7 @@ function App() {
                   />
                 </div>
                 <span className="input-hint">
-                  ${cat.multiplier} = {formatNumber(cat.multiplier)} pts
+                  $1 = {formatNumber(cat.multiplier)} pts
                 </span>
               </div>
             ))}
