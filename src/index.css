@@ -1,1 +1,461 @@
-@import "tailwindcss";
+/* ============================================
+   Rewards Points Calculator - Vanilla CSS
+   ============================================ */
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-text: #333333;
+  --color-text-secondary: #666666;
+  --color-text-muted: #999999;
+  --color-border: #e2e8f0;
+  --color-border-focus: #4a90d9;
+  --color-accent: #4a90d9;
+  --color-accent-light: #e8f0fe;
+  --color-success: #2d8a4e;
+  --color-success-bg: #f0faf4;
+  --color-success-border: #b7e4c7;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --font-family: "Inter", "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "San Francisco", Helvetica, Arial, sans-serif;
+  --transition: 0.2s ease;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* App Container */
+.app-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.app-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+/* Main Content */
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Toggle Section */
+.toggle-section {
+  display: flex;
+  justify-content: center;
+}
+
+.toggle-fieldset {
+  border: none;
+  padding: 0;
+}
+
+.toggle-legend {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+  text-align: center;
+  width: 100%;
+}
+
+.toggle-group {
+  display: inline-flex;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.toggle-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-label {
+  display: block;
+  padding: 0.625rem 1.25rem;
+  border-radius: calc(var(--radius-md) - 2px);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: all var(--transition);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.toggle-option.active .toggle-label {
+  background-color: var(--color-accent);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle-option input[type="radio"]:focus-visible + .toggle-label {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Inputs Section */
+.inputs-section {
+  width: 100%;
+}
+
+.inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.input-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition), border-color var(--transition);
+}
+
+.input-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.input-card:focus-within {
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px var(--color-accent-light);
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.input-icon {
+  font-size: 1.1rem;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--color-border-focus);
+}
+
+.input-prefix {
+  padding: 0 0 0 0.875rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  user-select: none;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem 0.875rem 0.75rem 0.375rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  outline: none;
+  text-align: right;
+}
+
+.input-field::placeholder {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.input-hint {
+  display: block;
+  margin-top: 0.625rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* Results Section */
+.results-section {
+  width: 100%;
+}
+
+.results-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.results-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.total-points {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.25rem 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.total-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-success);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.total-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-success);
+  opacity: 0.8;
+}
+
+/* Breakdown */
+.breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.breakdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+.breakdown-item:hover {
+  background: var(--color-accent-light);
+}
+
+.breakdown-category {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.breakdown-icon {
+  font-size: 1.1rem;
+}
+
+.breakdown-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.breakdown-details {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.breakdown-spending {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.breakdown-points {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+  min-width: 80px;
+  text-align: right;
+}
+
+/* Footer */
+.app-footer {
+  text-align: center;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.app-footer p {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .inputs-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .input-card {
+    padding: 1rem;
+  }
+
+  .results-card {
+    padding: 1.5rem;
+  }
+
+  .total-number {
+    font-size: 2.5rem;
+  }
+
+  .breakdown-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .breakdown-details {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .toggle-group {
+    width: 100%;
+  }
+
+  .toggle-option {
+    flex: 1;
+  }
+
+  .toggle-label {
+    width: 100%;
+    text-align: center;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .total-number {
+    font-size: 2rem;
+  }
+
+  .input-field {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   Accessibility & Focus States
+   ============================================ */
+
+/* Ensure all interactive elements have visible focus */
+input:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: #666666;
+    --color-text: #000000;
+    --color-text-secondary: #333333;
+  }
+}
